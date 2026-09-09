@@ -8,8 +8,10 @@
    Free an entire doubly linked list.
    Walks through each node and frees it.
 */
-void free_dlist(Dlist *head) {
-    while (head) {
+void free_dlist(Dlist *head) 
+{
+    while (head) 
+    {
         Dlist *temp = head;
         head = head->next;
         free(temp);
@@ -20,9 +22,11 @@ void free_dlist(Dlist *head) {
    Check if DLL number is zero.
    Returns 1 if all digits are 0, else 0.
 */
-int is_zero(Dlist *num) {
+int is_zero(Dlist *num) 
+{
     if (!num) return 1;
-    while (num) {
+    while (num) 
+    {
         if (num->digit != 0) return 0;
         num = num->next;
     }
@@ -33,9 +37,11 @@ int is_zero(Dlist *num) {
    Count digits in DLL.
    Returns the number of nodes.
 */
-int length(Dlist *num) {
+int length(Dlist *num) 
+{
     int count = 0;
-    while (num) {
+    while (num) 
+    {
         count++;
         num = num->next;
     }
@@ -53,7 +59,8 @@ int length(Dlist *num) {
     0 if num1 == num2
     1 if num1 > num2
 */
-int compare_numbers(Dlist *num1, Dlist *num2) {
+int compare_numbers(Dlist *num1, Dlist *num2) 
+{
     int len1 = 0, len2 = 0;
     Dlist *t1 = num1, *t2 = num2;
 
@@ -64,7 +71,8 @@ int compare_numbers(Dlist *num1, Dlist *num2) {
     if (len1 > len2) return 1;
 
     t1 = num1; t2 = num2;
-    while (t1 && t2) {
+    while (t1 && t2) 
+    {
         if (t1->digit < t2->digit) return -1;
         if (t1->digit > t2->digit) return 1;
         t1 = t1->next;
@@ -80,9 +88,11 @@ int compare_numbers(Dlist *num1, Dlist *num2) {
 /*
    Create a new DLL node with a single digit.
 */
-Dlist* create_node(int digit) {
+Dlist* create_node(int digit) 
+{
     Dlist *new = (Dlist*)malloc(sizeof(Dlist));
-    if (!new) {
+    if (!new) 
+    {
         printf("Memory allocation failed!\n");
         exit(1);
     }
@@ -96,14 +106,19 @@ Dlist* create_node(int digit) {
    Convert string number (e.g. "12345") into doubly linked list.
    Each character becomes a node.
 */
-Dlist* create_number(const char *str) {
+Dlist* create_number(const char *str) 
+{
     Dlist *head = NULL, *tail = NULL;
-    for (int i = 0; str[i] != '\0'; i++) {
+    for (int i = 0; str[i] != '\0'; i++) 
+    {
         int digit = str[i] - '0';
         Dlist *new = create_node(digit);
-        if (!head) {
+        if (!head) 
+        {
             head = tail = new;
-        } else {
+        } 
+        else 
+        {
             tail->next = new;
             new->prev = tail;
             tail = new;
@@ -116,13 +131,16 @@ Dlist* create_number(const char *str) {
    Print the doubly linked list number.
    Traverses from head to tail.
 */
-void print_number(Dlist *head) {
-    if (!head) {
+void print_number(Dlist *head) 
+{
+    if (!head) 
+    {
         printf("0");
         return;
     }
     Dlist *temp = head;
-    while (temp) {
+    while (temp) 
+    {
         printf("%d", temp->digit);
         temp = temp->next;
     }
@@ -133,10 +151,12 @@ void print_number(Dlist *head) {
    NOTE: This only works for numbers that fit within C's long range.
    For very large numbers, you’ll need a full DLL-based division algorithm.
 */
-long dll_to_long(Dlist *num) {
+long dll_to_long(Dlist *num) 
+{
     long value = 0;
     Dlist *temp = num;
-    while (temp) {
+    while (temp) 
+    {
         value = value * 10 + temp->digit;
         temp = temp->next;
     }
@@ -157,7 +177,8 @@ long dll_to_long(Dlist *num) {
    4. Different length numbers.
    5. Large numbers.
 */
-Dlist* add_numbers(Dlist *num1, Dlist *num2) {
+Dlist* add_numbers(Dlist *num1, Dlist *num2) 
+{
     Dlist *tail1 = num1;
     while (tail1 && tail1->next) tail1 = tail1->next;
     Dlist *tail2 = num2;
@@ -166,7 +187,8 @@ Dlist* add_numbers(Dlist *num1, Dlist *num2) {
     Dlist *result = NULL;
     int carry = 0;
 
-    while (tail1 || tail2 || carry) {
+    while (tail1 || tail2 || carry) 
+    {
         int d1 = (tail1 ? tail1->digit : 0);
         int d2 = (tail2 ? tail2->digit : 0);
 
@@ -194,9 +216,11 @@ Dlist* add_numbers(Dlist *num1, Dlist *num2) {
    4. Different lengths.
    5. Negative result.
 */
-Dlist* sub_numbers(Dlist *num1, Dlist *num2, int *is_negative) {
+Dlist* sub_numbers(Dlist *num1, Dlist *num2, int *is_negative) 
+{
     *is_negative = 0;
-    if (compare_numbers(num1, num2) < 0) {
+    if (compare_numbers(num1, num2) < 0) 
+    {
         Dlist *tmp = num1;
         num1 = num2;
         num2 = tmp;
@@ -211,15 +235,19 @@ Dlist* sub_numbers(Dlist *num1, Dlist *num2, int *is_negative) {
     Dlist *result = NULL;
     int borrow = 0;
 
-    while (tail1 || tail2) {
+    while (tail1 || tail2)
+    {
         int d1 = (tail1 ? tail1->digit : 0);
         int d2 = (tail2 ? tail2->digit : 0);
 
         d1 -= borrow;
-        if (d1 < d2) {
+        if (d1 < d2) 
+        {
             d1 += 10;
             borrow = 1;
-        } else {
+        } 
+        else 
+        {
             borrow = 0;
         }
 
@@ -233,7 +261,8 @@ Dlist* sub_numbers(Dlist *num1, Dlist *num2, int *is_negative) {
         if (tail2) tail2 = tail2->prev;
     }
 
-    while (result && result->digit == 0 && result->next) {
+    while (result && result->digit == 0 && result->next) 
+    {
         result = result->next;
         result->prev = NULL;
     }
@@ -252,7 +281,8 @@ Dlist* sub_numbers(Dlist *num1, Dlist *num2, int *is_negative) {
    6. Shifting partial results for each digit of num2.
    7. Remove leading zeros in the final result.
 */
-Dlist* mul_numbers(Dlist *num1, Dlist *num2) {
+Dlist* mul_numbers(Dlist *num1, Dlist *num2) 
+{
     // Case 1: zero check
     if (is_zero(num1) || is_zero(num2)) 
     {
@@ -274,7 +304,8 @@ Dlist* mul_numbers(Dlist *num1, Dlist *num2) {
 
     // Step 4: multiply digit by digit
     int i = 0;
-    for (Dlist *p2 = tail2; p2; p2 = p2->prev, i++) {
+    for (Dlist *p2 = tail2; p2; p2 = p2->prev, i++) 
+    {
         int j = 0;
         for (Dlist *p1 = tail1; p1; p1 = p1->prev, j++) 
         {
@@ -333,20 +364,24 @@ Dlist* mul_numbers(Dlist *num1, Dlist *num2) {
    3. Dividend == Divisor → result is 1.
    4. General case → perform long division digit by digit.
 */
-Dlist* div_numbers(Dlist *num1, Dlist *num2) {
+Dlist* div_numbers(Dlist *num1, Dlist *num2) 
+{
     // Case 1: division by zero
-    if (is_zero(num2)) {
+    if (is_zero(num2)) 
+    {
         printf("Error: Division by zero!\n");
         return create_node(0);
     }
 
     // Case 2: dividend smaller than divisor
-    if (compare_numbers(num1, num2) < 0) {
+    if (compare_numbers(num1, num2) < 0) 
+    {
         return create_node(0);
     }
 
     // Case 3: dividend equal to divisor
-    if (compare_numbers(num1, num2) == 0) {
+    if (compare_numbers(num1, num2) == 0) 
+    {
         return create_node(1);
     }
 
